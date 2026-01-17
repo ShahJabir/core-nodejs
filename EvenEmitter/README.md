@@ -1169,6 +1169,6 @@ Feel free to submit issues and enhancement requests!
 
 Made with ❤️ by [Shah Jabir Taqi](https://github.com/ShahJabir)
 
-</div>
-
 ### Happy Coding! 🚀
+
+</div>
