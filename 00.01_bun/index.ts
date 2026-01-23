@@ -1,3 +1,11 @@
+enum Status {
+  Pending = "PENDING",
+  Success = "SUCCESS",
+  Error = "ERROR",
+}
+
 const PORT = process.env.PORT;
-console.log("Hello via Bun!");
+const currentStatus: Status = Status.Success;
+
 console.log(`The port is ${PORT}`);
+console.log(`Current Status: ${currentStatus}`);
