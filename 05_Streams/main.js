@@ -1,25 +1,31 @@
 import { open } from "fs/promises";
 
+console.time("Buffer");
 const fileHandle = await open("buffer.txt", "w");
 
 const stream = fileHandle.createWriteStream();
 console.log(stream.writableHighWaterMark);
-console.log(stream.writableLength);
 
-const buff = Buffer.from("B");
-console.log(stream.write(buff));
-console.log(stream.writableLength);
+let i = 0;
 
-const overBuff = Buffer.alloc(16384, "A");
-console.log(stream.write(overBuff));
-console.log(stream.writableLength);
+const writeBuff = () => {
+  while (i < 1000000) {
+    const buff = Buffer.from(` ${i} `, "utf-8");
+    i++;
+    if (i > 999999) {
+      return stream.end(buff);
+    }
+    if (!stream.write(buff)) break;
+  }
+};
+
+writeBuff();
 
 stream.on("drain", () => {
-  console.log("We are now safe to write more!");
-  console.log(stream.write(Buffer.alloc(1, "B")));
-  console.log(stream.writableLength);
+  console.log("Drained!!!");
+  writeBuff();
 });
-
-stream.end();
-
-await new Promise((resolve) => stream.once("finish", resolve));
+stream.on("finish", () => {
+  console.timeEnd("Buffer");
+  fileHandle.close();
+});
