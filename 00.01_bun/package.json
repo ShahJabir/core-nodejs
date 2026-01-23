@@ -4,7 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun index.ts"
+    "dev": "bun --hot index.ts",
+    "build": "bun build index.ts --outdir ./dist --target bun",
+    "build:single-file": "bun build index.ts --compile --outfile ./dist/app"
   },
   "devDependencies": {
     "@types/bun": "latest"
